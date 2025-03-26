@@ -12,7 +12,8 @@ const server = "https://sql-adventure-backend.onrender.com";
 
 const AuthForm = (props) => {
   // const server = "https://quiz-v2.onrender.com";
-  const { setLoginModal, Login, setIsLogin } = React.useContext(Context);
+  const { setLoginModal, Login, setIsLogin, setUser } =
+    React.useContext(Context);
   const history = useNavigate();
   // State variables for input values
   const [name, setName] = useState("");
@@ -107,6 +108,7 @@ const AuthForm = (props) => {
         setLoginModal(false);
         props.successPopup("Login Successful");
         setIsLogin(true);
+        setUser(res);
       }
     } catch (error) {
       props.errorPopup(error);
