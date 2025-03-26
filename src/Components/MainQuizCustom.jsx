@@ -440,7 +440,7 @@ const MainQuizCustom = () => {
   }, [user]);
 
   useEffect(() => {
-    if (!isSocketConnected) {
+    if (!isSocketConnected || !user) {
       return;
     }
 
