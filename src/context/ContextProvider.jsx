@@ -395,6 +395,8 @@ export const QuizProvider = ({ children }) => {
         // alert("Login Successful");
         // navigate("/dash");
         // console.log("Login successful:", response.data);
+        setUser(response.data);
+        setIsLogin(true);
         return true;
       }
     } catch (error) {

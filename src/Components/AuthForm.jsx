@@ -107,8 +107,8 @@ const AuthForm = (props) => {
         console.log("Login successful:", res);
         setLoginModal(false);
         props.successPopup("Login Successful");
-        setIsLogin(true);
-        setUser(res);
+        // setIsLogin(true);
+        // setUser(res);
       }
     } catch (error) {
       props.errorPopup(error);
