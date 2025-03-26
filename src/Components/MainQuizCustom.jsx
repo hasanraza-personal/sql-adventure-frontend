@@ -57,7 +57,7 @@ const MainQuizCustom = () => {
   const [isFinalGoogleFormCompleted, setIsFinalGoogleFormCompleted] =
     useState(false);
   const [loadingState, setLoadingState] = useState(true);
-  const { user } = useContext(Context);
+  const { user, isLogin } = useContext(Context);
   const { socket, isSocketConnected } = useContext(SocketContext);
   const [vidoes, setVideos] = useState([]);
   const [gameCompleted, setGameCompleted] = useState(false);
@@ -440,6 +440,8 @@ const MainQuizCustom = () => {
   }, [user]);
 
   useEffect(() => {
+    console.log("isSocketConnected: ", isSocketConnected);
+    console.log("user: ", user);
     if (!isSocketConnected || !user) {
       return;
     }
@@ -453,7 +455,7 @@ const MainQuizCustom = () => {
         setInitialGoogleFormCompleted(true);
       }
     });
-  }, [socket, isSocketConnected, user]);
+  }, [socket, isSocketConnected, user, isLogin]);
 
   if (loadingState) {
     return (
