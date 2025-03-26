@@ -444,13 +444,16 @@ const MainQuizCustom = () => {
       return;
     }
 
+    console.log("user: ", user);
+    socket.emit("register", { email: user.email });
+
     socket.on("initialGoogleFormSubmitted", (payload) => {
       console.log("payload: ", payload.emailFound);
       if (payload.emailFound == true) {
         setInitialGoogleFormCompleted(true);
       }
     });
-  }, [socket, isSocketConnected]);
+  }, [socket, isSocketConnected, user]);
 
   if (loadingState) {
     return (

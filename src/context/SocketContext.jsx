@@ -30,8 +30,6 @@ export const SocketProvider = ({ children }) => {
 
     // Set up connect listener for initial connection
     const connectHandler = () => {
-      console.log("user: ", user);
-      newSocket.emit("register", { email: user.email });
       setIsSocketConnected(true);
     };
     newSocket.on("connect", connectHandler);
