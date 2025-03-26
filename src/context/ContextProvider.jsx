@@ -395,8 +395,14 @@ export const QuizProvider = ({ children }) => {
         // alert("Login Successful");
         // navigate("/dash");
         // console.log("Login successful:", response.data);
-        setUser(response.data);
+
+        const userResponse = await axios.post(`${server}/getUserData`, {
+          email,
+        });
+
+        setUser(userResponse.data);
         setIsLogin(true);
+
         return true;
       }
     } catch (error) {
