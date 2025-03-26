@@ -123,7 +123,7 @@ const MainQuizCustom = () => {
 
   const handleExecuteSQLQuery = async (selectedOptions) => {
     try {
-      const result = await axios.post(`http://localhost:3000/executeSqlQuery`, {
+      const result = await axios.post(`${server}/executeSqlQuery`, {
         query: selectedOptions.toLowerCase(),
       });
       return result.data;
