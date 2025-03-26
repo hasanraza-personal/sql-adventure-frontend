@@ -37,9 +37,9 @@ const QuizTemplateCustom = forwardRef((props, ref) => {
 
   const newHandleRemoveOption = (option) => {
     setNewSelectedOptions(newSelectedOptions.filter((opt) => opt !== option));
-    setTimeout(() => {
-      setNewRemainingOptions([...newRemainingOptions, option]);
-    }, 300);
+    // setTimeout(() => {
+    setNewRemainingOptions([...newRemainingOptions, option]);
+    // }, 300);
   };
 
   // For normal mcq
