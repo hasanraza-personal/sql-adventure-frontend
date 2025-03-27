@@ -152,14 +152,25 @@ const MainQuizCustom = () => {
       setIndexQuiz(indexQuiz + 1);
       currentQuizData.time = questionTimeRef.current;
 
+      setWrongOption(null);
+      setWrongMessage("");
+      setIncorrentQuery(false);
+      setQueryText("");
+      setShowWrongModal(false);
+
       skipLevel.push(indexQuiz);
-      // setSkipLevel((prev) => [...prev, indexQuiz]);
       return;
     }
 
     if (data1 === "skip" && data2 === "last") {
       skipLevel.push(indexQuiz);
       // setSkipLevel((prev) => [...prev, indexQuiz]);
+
+      setWrongOption(null);
+      setWrongMessage("");
+      setIncorrentQuery(false);
+      setQueryText("");
+      setShowWrongModal(false);
 
       currentQuizData.time = questionTimeRef.current;
       submitQuiz();
