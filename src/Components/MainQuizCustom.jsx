@@ -16,10 +16,12 @@ import { SocketContext } from "../context/SocketContext";
 import { CustomURL, reviewObject } from "../utils/helper";
 import Playlist from "./PlayList";
 import { useNavigate } from "react-router-dom";
+import PDFViewer from "./PDFView";
 
 // const server = "http://localhost:3000";
 // const server = "https://sql-adventure-backend.onrender.com";
 const server = CustomURL;
+const skipLevel = [];
 
 const MainQuizCustom = () => {
   const navigate = useNavigate();
@@ -63,7 +65,9 @@ const MainQuizCustom = () => {
   const [vidoes, setVideos] = useState([]);
   const [gameCompleted, setGameCompleted] = useState(false);
   const [SQLCourselink, setSQLCourseLink] = useState("");
-  const [certificate, setCertificate] = useState("");
+  // const [certificate, setCertificate] = useState("");
+  const [level, setLevel] = useState("Advanced");
+  // const [skipLevel, setSkipLevel] = useState([]);
 
   // useEffect to detect level changes.
   useEffect(() => {
@@ -137,9 +141,30 @@ const MainQuizCustom = () => {
     }
   };
 
-  const handleNextButton = async (indexQuiz) => {
+  const handleNextButton = async (indexQuiz, data1, data2) => {
+    console.log("data2: ", data2);
+    console.log("data1: ", data1);
     const currentQuizData = quizData[indexQuiz];
     currentQuizData.attempt += 1;
+
+    if (data1 === "skip" && data2 === null) {
+      setAttemptedQuestions((prevItems) => [...prevItems, indexQuiz]);
+      setIndexQuiz(indexQuiz + 1);
+      currentQuizData.time = questionTimeRef.current;
+
+      skipLevel.push(indexQuiz);
+      // setSkipLevel((prev) => [...prev, indexQuiz]);
+      return;
+    }
+
+    if (data1 === "skip" && data2 === "last") {
+      skipLevel.push(indexQuiz);
+      // setSkipLevel((prev) => [...prev, indexQuiz]);
+
+      currentQuizData.time = questionTimeRef.current;
+      submitQuiz();
+      return;
+    }
 
     if (quizTemplateRef.current && queryText.length === 0) {
       const selectedOptions = quizTemplateRef.current.getNewSelectedOptions();
@@ -261,6 +286,16 @@ const MainQuizCustom = () => {
     console.log("Submit quiz");
     setLoadingState(true);
 
+    const fourthLevel = skipLevel.some((num) => num >= 15 && num <= 19);
+    if (fourthLevel) {
+      setLevel("Intermediate");
+    }
+
+    const thirdLevel = skipLevel.some((num) => num >= 10 && num <= 14);
+    if (thirdLevel) {
+      setLevel("Beginner");
+    }
+
     let gameRes = null;
     try {
       gameRes = await axios.post(`${server}/saveGameResult`, {
@@ -287,7 +322,7 @@ const MainQuizCustom = () => {
           questionTime: quizData[i].time,
           attempt: quizData[i].attempt,
         });
-        console.log("quizData[i]: ", quizData[i]);
+        // console.log("quizData[i]: ", quizData[i]);
 
         if (attempt == false && quizData[i].attempt > 1) {
           for (let j = 0; j < reviewObject.length; j++) {
@@ -297,6 +332,7 @@ const MainQuizCustom = () => {
 
                 if (reviewObject[j].linkType == "video") {
                   videoArr.push(reviewObject[j].link);
+                  setLevel(reviewObject[j].levelType);
                 }
 
                 setSQLCourseLink(reviewObject[j].link);
@@ -322,11 +358,17 @@ const MainQuizCustom = () => {
         }
       }
 
-      console.log("suggestion: ", suggestion);
+      // console.log("suggestion: ", suggestion);
 
       await generatePDF();
       setGameCompleted(true);
       setLoadingState(false);
+
+      setTimeout(() => {
+        alert(
+          "Your certificate is ready and has been downloaded. Please check your downloads"
+        );
+      }, 2000);
     } catch (error) {
       console.log("Error occured while save saveGameQuestion: ", error);
       console.log("error: ", error);
@@ -419,12 +461,13 @@ const MainQuizCustom = () => {
   }, [isInitialGoogleFormCompleted]);
 
   async function checkGoogleFormStatus() {
+    skipLevel.length = 0;
     try {
       const response = await axios.post(`${server}/getGoogleFormStatus`, {
         email: user.email,
       });
       const data = response.data;
-      console.log("data: ", data);
+      // console.log("data: ", data);
 
       if (data?.initialGoogleFormCompleted == true) {
         setInitialGoogleFormCompleted(true);
@@ -504,9 +547,13 @@ const MainQuizCustom = () => {
                 You have completed the game.
               </p>
               <p className="mt-2 text-lg text-center text-white">
-                You are at the <span className="font-semibold">Beginner</span>{" "}
+                You are at the <span className="font-semibold">{level}</span>{" "}
                 level.
               </p>
+            </div>
+
+            <div>
+              <PDFViewer pdfUrl="https://ddlypxwpahwjzazfywmb.supabase.co/storage/v1/object/public/sql-adventure//certificate_dfe0c9b6-b494-4299-b17b-76df2a324828.pdf" />
             </div>
 
             {/* Playlist Title and Component */}
@@ -532,14 +579,6 @@ const MainQuizCustom = () => {
 
             {/* Action Buttons */}
             <div className="flex justify-center mt-8 space-x-4">
-              {/* <button
-                onClick={async () => {
-                  await generatePDF();
-                }}
-                className="px-6 py-2 bg-green-500 text-white rounded shadow hover:bg-green-600 transition-colors"
-              >
-                Download Certificate
-              </button> */}
               <button
                 onClick={() => {
                   navigate("/profile");
@@ -696,8 +735,9 @@ const MainQuizCustom = () => {
 
                 {/* Next and Submit button */}
                 <div className="flex pb-12 justify-center items-center gap-12">
+                  {/* Next */}
                   <div
-                    onClick={() => handleNextButton(indexQuiz)}
+                    onClick={() => handleNextButton(indexQuiz, null, null)}
                     className={`w-[119px] cursor-pointer hover:opacity-85 transition-all duration-300 flex justify-center items-center relative rounded bg-darkorchid-200 box-border h-[2.938rem] overflow-hidden text-left text-[1rem] text-white font-prosto-one border-[1px] border-solid border-darkorchid-100 ${
                       indexQuiz === quizData.length - 1 ? "hidden" : ""
                     }`}
@@ -705,19 +745,41 @@ const MainQuizCustom = () => {
                     <div className=" ">NEXT</div>
                   </div>
 
+                  {/* Skip */}
+                  {indexQuiz > 9 && (
+                    <div
+                      onClick={() => handleNextButton(indexQuiz, "skip", null)}
+                      className={`w-[119px] cursor-pointer hover:opacity-85 transition-all duration-300 flex justify-center items-center relative rounded bg-darkorchid-200 box-border h-[2.938rem] overflow-hidden text-left text-[1rem] text-white font-prosto-one border-[1px] border-solid border-darkorchid-100 ${
+                        indexQuiz === quizData.length - 1 ? "hidden" : ""
+                      }`}
+                    >
+                      <div className=" ">SKIP</div>
+                    </div>
+                  )}
+
+                  {/* Submit */}
                   <div
-                    onClick={() => {}}
+                    onClick={() => handleNextButton(indexQuiz, null, null)}
                     className={`w-[119px] flex justify-center items-center relative rounded bg-darkorchid-200 box-border h-[2.938rem] overflow-hidden text-left text-[1rem] text-white font-prosto-one border-[1px] border-solid border-darkorchid-100 ${
                       indexQuiz === quizData.length - 1 ? "" : "hidden"
                     }`}
                   >
-                    <div
-                      onClick={() => handleNextButton(indexQuiz)}
-                      className=" "
-                    >
-                      Submit
-                    </div>
+                    <div>Submit</div>
                   </div>
+
+                  {/* Skip */}
+                  {indexQuiz > 18 && (
+                    <div
+                      onClick={() =>
+                        handleNextButton(indexQuiz, "skip", "last")
+                      }
+                      className={`w-[119px] cursor-pointer hover:opacity-85 transition-all duration-300 flex justify-center items-center relative rounded bg-darkorchid-200 box-border h-[2.938rem] overflow-hidden text-left text-[1rem] text-white font-prosto-one border-[1px] border-solid border-darkorchid-100 ${
+                        indexQuiz === quizData.length - 1 ? "" : "hidden"
+                      }`}
+                    >
+                      <div>SKIP</div>
+                    </div>
+                  )}
                 </div>
                 {/* Next and Submit button */}
               </div>

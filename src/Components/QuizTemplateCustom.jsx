@@ -73,11 +73,11 @@ const QuizTemplateCustom = forwardRef((props, ref) => {
           {/* Selected options */}
           <div>
             <p className="my-4">Your Answer:</p>
-            <div className="flex gap-5 flex-wrap items-center h-12 my-5">
+            <div className="flex gap-5 flex-wrap items-center my-5">
               {newSelectedOptions.map((option, index) => (
                 <div
                   key={index}
-                  className="cursor-pointer bg-white hover:opacity-70 hover:scale-105  text-black p-1 transition-opacity duration-300"
+                  className="cursor-pointer bg-white hover:opacity-70 hover:scale-105 text-black p-1 transition-all duration-300 min-h-[3rem]"
                   onClick={() => {
                     if (props.quizData[props.index].type === "a") {
                       newHandleRemoveOption(option);
@@ -105,8 +105,7 @@ const QuizTemplateCustom = forwardRef((props, ref) => {
               {props.quizData[props.index].type === "b" &&
                 newRemainingOptions.map((option, index) => (
                   <div
-                    className={`bg-black cursor-pointer p-3 hover:opacity-70 hover:scale-105 transition-all duration-200 h-[47px] relative rounded flex items-center justify-center box-border overflow-hidden text-left text-[1.25rem] text-white font-prosto-one border-[1px] border-solid ${
-                      // Only highlight the clicked wrong option with a red border.
+                    className={`w-full md:w-auto bg-black cursor-pointer p-3 hover:opacity-70 hover:scale-105 transition-all duration-200 h-auto md:h-[47px] relative rounded flex items-center justify-center box-border text-left text-[1.25rem] text-white font-prosto-one border-[1px] border-solid ${
                       props.wrongOption === option
                         ? "border-red-500 bg-red-500"
                         : "border-darkorchid-100"
