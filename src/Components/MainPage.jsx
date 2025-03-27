@@ -209,7 +209,7 @@ const MainPage = () => {
       </div>
 
       {/* leaderboard */}
-      <div
+      {/* <div
         id="leaderboard"
         className="flex pb-[14.875rem] flex-col items-center justify-center bg-black pt-[113px]"
       >
@@ -230,7 +230,6 @@ const MainPage = () => {
         <div className="w-[92%] md:w-[717px]  relative rounded-[15px] bg-darkorchid-200 box-border max-h-[35.813rem] overflow-auto  text-left text-[1.25rem] text-white font-prosto-one border-[1px] border-solid border-darkorchid-100">
           <div className="absolute top-[-10.5rem] left-[-10.437rem] [filter:blur(411.3px)] rounded-[50%] bg-darkorchid-100 w-[24.5rem] h-[24.5rem]" />
           <div className="flex flex-col gap-0 text-white font-bold">
-            {/* columns */}
             <div className="flex h-20 border-b">
               <div className="w-[20%] border-r flex items-center justify-center">
                 Rank
@@ -243,14 +242,6 @@ const MainPage = () => {
               </div>
             </div>
 
-            {/* rows
-  <div className="flex text-[1rem] font-prosto-one font-semibold h-10 border-b">
-    <div className="w-[20%] border-r flex items-center justify-center">Rank</div>
-    <div className="w-[60%] border-r flex items-center justify-center">Name</div>
-    <div className="w-[20%] flex items-center justify-center">Score</div>
-  </div> */}
-
-            {/* row component */}
             {fetchLeaderboardArr &&
               fetchLeaderboardArr.map((row, index) => (
                 <TableRow
@@ -260,13 +251,9 @@ const MainPage = () => {
                   Score={row.score}
                 />
               ))}
-            {/* <TableRow key={1} Rank={1} Name={'Vivek'} Score={2}/>
-<TableRow key={2} Rank={2} Name={'Vivek'} Score={2}/>
-<TableRow key={3} Rank={4} Name={'Vivek'} Score={2}/>
-<TableRow key={4} Rank={3} Name={'Vivek'} Score={2}/> */}
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
