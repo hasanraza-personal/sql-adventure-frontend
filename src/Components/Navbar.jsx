@@ -25,7 +25,7 @@ const Navbar = () => {
           <NavItem to="/">HOME</NavItem>
           <NavItem to="about">ABOUT</NavItem>
           <NavItem to="quiz">QUIZ</NavItem>
-          <NavItem to="leaderboard">LEADERBOARD</NavItem>
+          {/* <NavItem to="leaderboard">LEADERBOARD</NavItem> */}
           <NavItem to="howtoplay">HOW TO PLAY</NavItem>
         </div>
 
@@ -81,9 +81,9 @@ const Navbar = () => {
           <SidebarItem to="quiz" setIsSidebarOpen={setIsSidebarOpen}>
             QUIZ
           </SidebarItem>
-          <SidebarItem to="leaderboard" setIsSidebarOpen={setIsSidebarOpen}>
+          {/* <SidebarItem to="leaderboard" setIsSidebarOpen={setIsSidebarOpen}>
             LEADERBOARD
-          </SidebarItem>
+          </SidebarItem> */}
           <SidebarItem to="howtoplay" setIsSidebarOpen={setIsSidebarOpen}>
             HOW TO PLAY
           </SidebarItem>
