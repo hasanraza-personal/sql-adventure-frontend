@@ -211,7 +211,7 @@ const MainPage = () => {
       {/* leaderboard */}
       <div
         id="leaderboard"
-        className="flex pb-[14.875rem] flex-col items-center justify-center bg-black pt-[113px]"
+        className="flex pb-[2.875rem] flex-col items-center justify-center bg-black pt-[113px]"
       >
         {/* <div
           style={{
