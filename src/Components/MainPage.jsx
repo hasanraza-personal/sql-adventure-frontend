@@ -209,11 +209,11 @@ const MainPage = () => {
       </div>
 
       {/* leaderboard */}
-      {/* <div
+      <div
         id="leaderboard"
         className="flex pb-[14.875rem] flex-col items-center justify-center bg-black pt-[113px]"
       >
-        <div
+        {/* <div
           style={{
             backgroundImage: "url('https://i.imgur.com/27Nnpoh.png')",
             backgroundPosition: "center",
@@ -252,8 +252,8 @@ const MainPage = () => {
                 />
               ))}
           </div>
-        </div>
-      </div> */}
+        </div> */}
+      </div>
     </div>
   );
 };
