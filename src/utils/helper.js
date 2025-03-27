@@ -335,3 +335,6 @@ export const reviewObject = [
     link: "https://youtu.be/ywUn5qNmxNo",
   },
 ];
+
+export const CustomURL = "http://localhost:3000";
+// export const CustomURL = "https://sql-adventure-backend.onrender.com"

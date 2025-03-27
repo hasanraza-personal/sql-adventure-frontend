@@ -3,13 +3,14 @@ import React, { useEffect, useState } from "react";
 // import jwt from "jsonwebtoken";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { CustomURL } from "../utils/helper";
 
 export const Context = React.createContext();
 
 export const QuizProvider = ({ children }) => {
   // const server = "https://quiz-v2.onrender.com";
   // const server = "http://localhost:3000";
-  const server = "https://sql-adventure-backend.onrender.com";
+  const server = CustomURL;
 
   const navigate = useNavigate();
   const [fetchLeaderboardArr, setFetchLeaderboardArr] = useState([]);

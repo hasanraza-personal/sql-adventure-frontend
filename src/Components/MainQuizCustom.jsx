@@ -13,12 +13,13 @@ import CongratsModal from "./CongratsModal";
 import { Context } from "../context/ContextProvider";
 import { OrbitProgress } from "react-loading-indicators";
 import { SocketContext } from "../context/SocketContext";
-import { reviewObject } from "../utils/helper";
+import { CustomURL, reviewObject } from "../utils/helper";
 import Playlist from "./PlayList";
 import { useNavigate } from "react-router-dom";
 
 // const server = "http://localhost:3000";
-const server = "https://sql-adventure-backend.onrender.com";
+// const server = "https://sql-adventure-backend.onrender.com";
+const server = CustomURL;
 
 const MainQuizCustom = () => {
   const navigate = useNavigate();
@@ -62,6 +63,7 @@ const MainQuizCustom = () => {
   const [vidoes, setVideos] = useState([]);
   const [gameCompleted, setGameCompleted] = useState(false);
   const [SQLCourselink, setSQLCourseLink] = useState("");
+  const [certificate, setCertificate] = useState("");
 
   // useEffect to detect level changes.
   useEffect(() => {
@@ -334,9 +336,11 @@ const MainQuizCustom = () => {
   async function generatePDF() {
     try {
       // POST to the backend endpoint and expect the PDF as a Blob
+      console.log(user);
+
       const response = await axios.post(
         `${server}/generateCertificate`,
-        { name: "name", certificateId: "abc" },
+        { name: user.name, email: user.email },
         { responseType: "blob" }
       );
 
@@ -440,13 +444,13 @@ const MainQuizCustom = () => {
   }, [user]);
 
   useEffect(() => {
-    console.log("isSocketConnected: ", isSocketConnected);
-    console.log("user: ", user);
+    // console.log("isSocketConnected: ", isSocketConnected);
+    // console.log("user: ", user);
     if (!isSocketConnected || !user) {
       return;
     }
 
-    console.log("user: ", user);
+    // console.log("user: ", user);
     socket.emit("register", { email: user.email });
 
     socket.on("initialGoogleFormSubmitted", (payload) => {

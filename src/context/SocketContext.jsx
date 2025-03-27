@@ -5,6 +5,9 @@ import { useState } from "react";
 import { createContext } from "react";
 import { io } from "socket.io-client";
 import { Context } from "./ContextProvider";
+import { CustomURL } from "../utils/helper";
+
+const server = CustomURL;
 
 // Create a context for the socket
 export const SocketContext = createContext();
@@ -23,7 +26,7 @@ export const SocketProvider = ({ children }) => {
     }
 
     // Establish the socket connection
-    const newSocket = io("https://sql-adventure-backend.onrender.com", {
+    const newSocket = io(server, {
       reconnectionAttempts: 5,
     });
     console.log("newSocket: ", newSocket);

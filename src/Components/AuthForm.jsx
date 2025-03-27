@@ -6,9 +6,11 @@ import { useNavigate } from "react-router-dom";
 
 // import { useNavigate } from 'react-router-dom';
 import { Context } from "../context/ContextProvider";
+import { CustomURL } from "../utils/helper";
 
 // const server = "http://localhost:3000";
-const server = "https://sql-adventure-backend.onrender.com";
+// const server = "https://sql-adventure-backend.onrender.com";
+const server = CustomURL;
 
 const AuthForm = (props) => {
   // const server = "https://quiz-v2.onrender.com";

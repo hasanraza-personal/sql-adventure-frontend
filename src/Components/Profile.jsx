@@ -5,9 +5,11 @@ import { Context } from "../context/ContextProvider";
 import { useNavigate } from "react-router-dom";
 import ProfileCard from "./ProfileCard";
 import axios from "axios";
+import { CustomURL } from "../utils/helper";
 
 // const server = "http://localhost:3000";
-const server = "https://sql-adventure-backend.onrender.com";
+// const server = "https://sql-adventure-backend.onrender.com";
+const server = CustomURL;
 
 const Profile = () => {
   const { isLogin, isLoggedIn, user, logout, setIsLogin } =
