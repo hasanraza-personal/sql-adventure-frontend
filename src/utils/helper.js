@@ -336,5 +336,5 @@ export const reviewObject = [
   },
 ];
 
-export const CustomURL = "http://localhost:3000";
-// export const CustomURL = "https://sql-adventure-backend.onrender.com"
+// export const CustomURL = "http://localhost:3000";
+export const CustomURL = "https://sql-adventure-backend.onrender.com";
