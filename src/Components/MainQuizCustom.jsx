@@ -27,7 +27,7 @@ const skipLevel = [];
 let links = [
   {
     level: "Beginner",
-    link: "https://onlinecourses.nptel.ac.in/noc20_c s03/preview",
+    link: "https://onlinecourses.nptel.ac.in/noc20_cs03/preview",
   },
   {
     level: "Beginner",
@@ -43,7 +43,7 @@ let links = [
   },
   {
     level: "Advanced",
-    link: "https://onlinecourses.nptel.ac.in/noc20_c s03/preview",
+    link: "https://onlinecourses.nptel.ac.in/noc20_cs03/preview",
   },
   {
     level: "Advanced",
@@ -93,8 +93,8 @@ const MainQuizCustom = () => {
   const prevLevelRef = useRef(quizData[indexQuiz].level);
   const [isInitialGoogleFormCompleted, setInitialGoogleFormCompleted] =
     useState(false);
-  const [isFinalGoogleFormCompleted, setIsFinalGoogleFormCompleted] =
-    useState(false);
+  // const [isFinalGoogleFormCompleted, setIsFinalGoogleFormCompleted] =
+  //   useState(false);
   const [loadingState, setLoadingState] = useState(true);
   const { user, isLogin } = useContext(Context);
   const { socket, isSocketConnected } = useContext(SocketContext);
@@ -112,12 +112,12 @@ const MainQuizCustom = () => {
   useEffect(() => {
     const currentLevel = quizData[indexQuiz].level;
     if (prevLevelRef.current !== currentLevel) {
-      console.log(
-        "Level changed from",
-        prevLevelRef.current,
-        "to",
-        currentLevel
-      );
+      // console.log(
+      //   "Level changed from",
+      //   prevLevelRef.current,
+      //   "to",
+      //   currentLevel
+      // );
       // Perform any additional actions here when the level changes.
       setClearedLevel(prevLevelRef.current);
       setShowCongratsModal(true);
@@ -181,8 +181,8 @@ const MainQuizCustom = () => {
   };
 
   const handleNextButton = async (indexQuiz, data1, data2) => {
-    console.log("data2: ", data2);
-    console.log("data1: ", data1);
+    // console.log("data2: ", data2);
+    // console.log("data1: ", data1);
     const currentQuizData = quizData[indexQuiz];
     currentQuizData.attempt += 1;
 
@@ -252,8 +252,8 @@ const MainQuizCustom = () => {
           selectedOptions.join(" ").toLowerCase() !==
           currentQuizData.correctOption.join(" ").toLowerCase()
         ) {
-          console.log(currentQuizData.correctOption.join(" ").toLowerCase());
-          console.log(selectedOptions.join(" ").toLowerCase());
+          // console.log(currentQuizData.correctOption.join(" ").toLowerCase());
+          // console.log(selectedOptions.join(" ").toLowerCase());
           setIncorrentQuery(true);
           setQueryText(selectedOptions.join(" "));
 
@@ -265,7 +265,7 @@ const MainQuizCustom = () => {
         const response = await handleExecuteSQLQuery(
           selectedOptions.join(" ").toLowerCase()
         );
-        console.log("response: ", response);
+        // console.log("response: ", response);
 
         if (response.type === "array") {
           setSQLResponse(response.data);
