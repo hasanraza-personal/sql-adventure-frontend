@@ -17,11 +17,47 @@ import { CustomURL, reviewObject } from "../utils/helper";
 import Playlist from "./PlayList";
 import { useNavigate } from "react-router-dom";
 import PDFViewer from "./PDFView";
+import { v4 as uuidv4 } from "uuid";
 
 // const server = "http://localhost:3000";
 // const server = "https://sql-adventure-backend.onrender.com";
 const server = CustomURL;
 const skipLevel = [];
+
+let links = [
+  {
+    level: "Beginner",
+    link: "https://onlinecourses.nptel.ac.in/noc20_c s03/preview",
+  },
+  {
+    level: "Beginner",
+    link: "https://nptel.ac.in/courses/106104135",
+  },
+  {
+    level: "Beginner",
+    link: "https://nptel.ac.in/courses/106106093",
+  },
+  {
+    level: "Intermediate",
+    link: "https://nptel.ac.in/courses/106106093",
+  },
+  {
+    level: "Advanced",
+    link: "https://onlinecourses.nptel.ac.in/noc20_c s03/preview",
+  },
+  {
+    level: "Advanced",
+    link: "https://nptel.ac.in/courses/106104135",
+  },
+  {
+    level: "Advanced",
+    link: "https://nptel.ac.in/courses/106106093",
+  },
+  {
+    level: "Advanced",
+    link: "https://nptel.ac.in/courses/106106093",
+  },
+];
 
 const MainQuizCustom = () => {
   const navigate = useNavigate();
@@ -65,9 +101,12 @@ const MainQuizCustom = () => {
   const [vidoes, setVideos] = useState([]);
   const [gameCompleted, setGameCompleted] = useState(false);
   const [SQLCourselink, setSQLCourseLink] = useState("");
-  // const [certificate, setCertificate] = useState("");
+  const [displayCertificate, setDisplayCertificate] = useState("");
   const [level, setLevel] = useState("Advanced");
   // const [skipLevel, setSkipLevel] = useState([]);
+  const [documentLink, setDocumentLink] = useState(
+    "https://onlinecourses.nptel.ac.in/noc20_cs03/preview"
+  );
 
   // useEffect to detect level changes.
   useEffect(() => {
@@ -391,9 +430,12 @@ const MainQuizCustom = () => {
       // POST to the backend endpoint and expect the PDF as a Blob
       console.log(user);
 
+      const certificateName = `certificate_${uuidv4()}.pdf`;
+      setDisplayCertificate(certificateName);
+
       const response = await axios.post(
         `${server}/generateCertificate`,
-        { name: user.name, email: user.email },
+        { name: user.name, email: user.email, certificateName },
         { responseType: "blob" }
       );
 
@@ -564,7 +606,9 @@ const MainQuizCustom = () => {
             </div>
 
             <div>
-              <PDFViewer pdfUrl="https://ddlypxwpahwjzazfywmb.supabase.co/storage/v1/object/public/sql-adventure//certificate_dfe0c9b6-b494-4299-b17b-76df2a324828.pdf" />
+              <PDFViewer
+                pdfUrl={`https://ddlypxwpahwjzazfywmb.supabase.co/storage/v1/object/public/sql-adventure//${displayCertificate}`}
+              />
             </div>
 
             {/* Playlist Title and Component */}
@@ -578,14 +622,24 @@ const MainQuizCustom = () => {
 
             {/* Additional Professional Link */}
             <div className="mt-8 text-center">
-              <a
-                href={SQLCourselink} // Replace with your desired URL
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-lg text-blue-400 hover:text-blue-600 underline"
-              >
-                Discover More SQL Courses and Resources
-              </a>
+              {/* Beginner */}
+
+              {links.map((link, id) => {
+                if (level === link.level) {
+                  return (
+                    <div key={id} className="mb-2">
+                      <a
+                        href={link.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-lg text-blue-400 hover:text-blue-600 underline"
+                      >
+                        Discover More SQL Courses and Resources
+                      </a>
+                    </div>
+                  );
+                }
+              })}
             </div>
 
             {/* Action Buttons */}
